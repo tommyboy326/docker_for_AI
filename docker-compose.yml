@@ -1,24 +1,19 @@
 version: '3.8'
 
 services:
-  # Ollama 服務
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    restart: always
 
   # FlowiseAI 服務
   flowise:
     image: flowiseai/flowise:latest
     container_name: flowise
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - PORT=3000
+      - VECTORSTORE=chroma
+      - CHROMA_URL=http://chroma:8000
+    depends_on:
+      - chroma
     volumes:
       - flowise_data:/root/.flowise
     restart: always
@@ -95,10 +90,51 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: always
 
+  # Vue.js 服務
+  vue:
+    image: node:latest
+    container_name: vue
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./vue-app/llm-demo:/app
+    restart: always
+
+  # Ollama 服務
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+    pull_policy: always
+    tty: true
+
+  # OpenWebUI 服務
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: openwebui
+    ports:
+      - "3000:8080"
+    volumes:
+      - openwebui_data:/app/backend/data
+    environment:
+      - '/ollama/api=http://ollama:11434/api'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    depends_on:
+      - ollama
+
+    restart: always
+
 # 資料卷 (Volume) 定義 會在這個檔案的最底下
 volumes:
   ollama_data:
-    driver: local
+    driver: local 
     driver_opts:
       type: none
       o: bind
@@ -133,3 +169,9 @@ volumes:
       type: none
       o: bind
       device: ./postgres_data
+  openwebui_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./openwebui_data

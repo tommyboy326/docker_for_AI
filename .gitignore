@@ -1,26 +1,23 @@
 # 忽略 .env 文件
 .env
 
-# 忽略 ollama_data 資料夾中的所有內容，但保留資料夾
+# 忽略資料卷資料夾中的所有內容
 ollama_data/*
-!ollama_data/.gitkeep
-
-# 忽略 flowise_data 資料夾中的所有內容，但保留資料夾
 flowise_data/*
-!flowise_data/.gitkeep
-
-# 忽略 mysql_data 資料夾中的所有內容，但保留資料夾
 mysql_data/*
-!mysql_data/.gitkeep
-
-# 忽略 chroma_data 資料夾中的所有內容，但保留資料夾
 chroma_data/*
-!chroma_data/.gitkeep
-
-# 忽略 n8n_data 資料夾中的所有內容，但保留資料夾
 n8n_data/*
-!n8n_data/.gitkeep
-
-# 忽略 postgres_data 資料夾中的所有內容，但保留資料夾
 postgres_data/*
-!postgres_data/.gitkeep
+openwebui_data/*
+
+# 但不要忽略資料夾本身
+!ollama_data/
+!flowise_data/
+!mysql_data/
+!chroma_data/
+!n8n_data/
+!postgres_data/
+!openwebui_data/
+
+.DS_Store
+.DS_Store?
