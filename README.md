@@ -68,6 +68,14 @@ Docker Desktop 已經包含 Docker Compose，無需額外安裝。
 1. 複製 `.env.example` 檔案並命名為 `.env`。
 2. 修改 `.env` 檔案中的 所需要修改的你的密碼、帳號等等。
 
+### 建立資料夾指令
+
+在終端機中在此目錄下執行以下指令來建立所需的資料夾存放資料：
+
+```sh
+mkdir ollama_data flowise_data mysql_data chroma_data n8n_data postgres_data openwebui_data
+```
+
 ## 3. 使用 Docker Compose 啟動服務
 
 ```bash
@@ -107,9 +115,10 @@ docker-compose restart
 
 ## TODO List
 
-- [x] ollama 在mac底下建議直接安裝 https://ollama.com/download 這個版本，因為使用docker版本不支援GPU/NPU反而變慢
+- [x] ollama 
 - [x] openwebui
 
+ps 在mac底下建議直接安裝 https://ollama.com/download 這個版本，因為使用docker版本不支援Apple GPU/NPU反而變慢
 
 ## 相關連結
 

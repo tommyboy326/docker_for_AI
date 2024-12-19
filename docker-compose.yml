@@ -113,6 +113,14 @@ services:
     restart: always
     pull_policy: always
     tty: true
+    ## nvidiaGPU 設定 
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
 
   # OpenWebUI 服務
   openwebui:
